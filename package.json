@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ng serve --port 8081 \" \"nodemon server.js\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -18,7 +18,15 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
+    "body-parser": "^1.20.1",
+    "chart.js": "^4.0.1",
+    "concurrently": "*",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql2": "*",
+    "ng2-charts": "^4.0.1",
     "rxjs": "~7.5.0",
+    "sequelize": "^6.25.6",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },

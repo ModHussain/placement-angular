@@ -1,0 +1,18 @@
+<div class="container m-5">
+    <div class="admin-login m-5 border p-5">
+        <form class="w3-container" (ngSubmit)="adminLogin(adminData)" *ngIf="!LoginSuccess">
+            <h2 class="my-3">Admin Login</h2>
+            <label>User Name</label>
+            <input class="w3-input" type="text" name="username" [(ngModel)]="adminData.username">
+            
+            <label>Password</label>
+            <input class="w3-input" type="password" name="password" [(ngModel)]="adminData.password">
+            <button type="submit" class="w3-button w3-blue my-3">Log-In</button>
+            </form>
+            <div class="w3-panel w3-green w3-display-container p-3" *ngIf="LoginSuccess">
+                <h3>Success! Logged as Admin</h3>
+                <button class="w3-button w3-red mx-1" routerLinkActive="active" routerLink="/company-list">Go Company link</button>
+              </div>
+    </div>
+    
+</div>

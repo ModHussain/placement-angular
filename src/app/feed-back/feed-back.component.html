@@ -1,0 +1,30 @@
+<div class="container m-5">
+    <div class="row">
+        <div class="col-sm-5 m-2 w3-border w3-round p-3">
+            <form (ngSubmit)="submitFeedBack(feedBackData)">
+                <h5>Share your FeedBack</h5>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input class="form-control" type="text" name="name" [(ngModel)]="feedBackData.name" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Message</label>
+                    <textarea class="form-control" name="message" [(ngModel)]="feedBackData.message" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input class="form-control" type="number" name="mobileNumber" [(ngModel)]="feedBackData.mobileNumber" required>
+                  </div>
+                  <button class="w3-button w3-blue" type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <div class="" *ngFor="let comment of feedBackList">
+                <blockquote class="w3-panel p-3 w3-leftbar w3-light-grey">
+                    <p class="w3-large"><i>"{{comment.message}}"</i></p>
+                    <span>{{comment.name}}</span> - <span>{{comment.mobileNumber}}</span>
+                  </blockquote> 
+            </div>
+        </div>
+    </div>
+</div>

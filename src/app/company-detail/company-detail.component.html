@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="action-section mt-4">
+        <button class="w3-button w3-blue mx-1" routerLinkActive="active" routerLink="/drives-info">All Live Drives</button>
+        <button class="w3-button w3-blue mx-1" routerLinkActive="active" routerLink="/drive-result">Drive Results</button>
+    </div>
+    <div class="align-items-center pt-3 pb-2 my-5 border-bottom">
+        <div class="row">
+          <div class="col-sm-4">
+            <h2 class="h2">Applied Student's List</h2>
+          </div>
+          <div class="col-sm-1">
+            
+          </div>
+          <div class="col-sm-5">
+            <input class="form-control" placeholder="Search By Student Name" type="text" name="name" [(ngModel)]="studentName"  required>
+            
+          </div>
+          <div class="col-sm-1">
+            <button class="w3-button w3-blue mx-1" (click)="searchStudent(studentName)">Search</button>
+          </div>
+        </div>
+      </div>
+      <div class="">
+        Interview Status : <span class="w3-button w3-red">Rejected</span> <span class="w3-button w3-blue">Pending</span> <span class="w3-button w3-green">Selected</span>
+      </div>
+      <div class="record" *ngFor="let student of studentList;let i = index">
+        <div class="w3-panel w3-display-container p-4" [ngClass]="{'w3-blue': student.interviewStatus === null || 'Pending', 'w3-red' : student.interviewStatus === 'Rejected','w3-green' : student.interviewStatus === 'Selected' }">
+           <div class="row">
+            <div class="col-sm-5">
+            <h3>Student Name : {{student.studentName}}</h3>
+            <h5>Applied for : {{student.companyName}}</h5>
+            <h5>Interview Status : <span *ngIf="student.interviewStatus === null">Pending</span>{{student.interviewStatus}}</h5>
+            </div>
+            <div class="col-sm-5">
+                <h6>Other Info</h6>
+                <span>Email Id : {{student.emailId}}</span><br>
+                <span>Student Group: {{student.group}}</span><br>
+                <span>Mobile No: {{student.mobileNumber}}</span>
+            </div>
+           </div> 
+            <button (click)="manageResult(student)"  *ngIf="adminUser"  class="w3-button w3-teal">Update Result</button>
+          </div>
+      </div>
+</div>
+
+<div id="editResult" class="w3-modal"  *ngIf="showModal" style="display:block;">
+    <div class="w3-modal-content" style="width: 650px;">
+      <header class="w3-container w3-blue p-3"> 
+        <span (click)="hideUpdateform()" onclick="document.getElementById('editResult').style.display='none'" 
+        class="w3-button w3-display-topright">&times;</span>
+        <h2>Edit Interview Status</h2>
+      </header>
+      <div class="w3-container">
+        <form (ngSubmit)="onUpdateResult(interviewStatus)">
+          <div class="form-group">
+            <label>Interview Status</label>
+            <select class="w3-select" name="option" name="data" [(ngModel)]="interviewStatus">
+                <option *ngFor="let level of levels" [ngValue]="level.value">{{level.name}}</option>
+              </select>
+          </div>
+          
+          <footer class="w3-container">
+            <div class="form-group">
+              <button class="btn btn-success btn-block" type="submit">Update Result</button>
+            </div>
+          </footer>
+          
+        </form>
+      </div>
+    </div>
+  </div>
