@@ -25,7 +25,8 @@ app.get("/", (req, res) => {
 require("./routes/company.routes")(app);
 require("./routes/student.routes")(app);
 require("./routes/feedback.route")(app);
-
+require("./routes/groupstudent.route")(app);
+require("./routes/studentcompany.route")(app);
 // PORT
 const port = process.env.PORT || 8000;
 

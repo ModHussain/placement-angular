@@ -22,5 +22,7 @@ db.sequelize = sequelize;
 db.company= require("./company.js")(sequelize, Sequelize);
 db.student= require("./student.js")(sequelize, Sequelize);
 db.feedback= require("./feedback.js")(sequelize, Sequelize);
+db.studentcompany = require("./studentcompany.js")(sequelize, Sequelize);
+db.groupstudent = require("./groupstudent.js")(sequelize, Sequelize);
 
 module.exports = db;

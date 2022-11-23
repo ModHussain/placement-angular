@@ -11,6 +11,8 @@ export class HttpCallService {
   COMPANY_REST_API: string = 'http://localhost:8000/api/company';
   student_api: string = 'http://localhost:8000/api/student';
   feedBack_api : string = 'http://localhost:8000/api/feedback'
+  studentCompany_api : string = 'http://localhost:8000/api/studentcompany'
+  groupStudent_api : string = 'http://localhost:8000/api/groupstudent'
   // Http Header
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(this.COMPANY_REST_API);
@@ -74,5 +76,21 @@ export class HttpCallService {
 
   createFeedBack(data: any): Observable<any> {
     return this.http.post(this.feedBack_api, data);
+  }
+
+  getstudentCompany(): Observable<any[]> {
+    return this.http.get<any[]>(this.studentCompany_api);
+  }
+
+  createstudentCompany(data: any): Observable<any> {
+    return this.http.post(this.studentCompany_api, data);
+  }
+
+  getgroupStudent(): Observable<any[]> {
+    return this.http.get<any[]>(this.groupStudent_api);
+  }
+
+  creategroupStudent(data: any): Observable<any> {
+    return this.http.post(this.groupStudent_api, data);
   }
 }

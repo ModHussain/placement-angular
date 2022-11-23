@@ -1,9 +1,27 @@
-<div style="display: block">
-    <canvas baseChart
-        [data]="barChartData"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [legend]="barChartLegend"
-        [type]="'bar'">
-</canvas>
+<div class="container m-2">
+  <button class="w3-button w3-blue mx-2" (click)="companyCountData()">Company vs Count</button>
+  <button class="w3-button w3-blue mx-2" (click)="groupCountData()">Group Vs Count</button>
+    <div class="container m-5 p-5 border chart-section" *ngIf="companyCountValue">
+      <h3>Student placed in Top Companies</h3>
+      <canvas baseChart
+      [data]="studentCompany"
+      [plugins]="barChartPlugins"
+      [legend]="barChartLegend"
+      [type]="'bar'">
+      </canvas>
+      <button class="w3-button w3-blue mx-2">Add Company</button>
+    </div>
+    <div class="container m-5 p-5 border chart-section" *ngIf="groupCountValue">
+      <h3>Group-wise Students Count placed</h3>
+      <canvas baseChart
+      [data]="groupStudent"
+      [plugins]="barChartPlugins"
+      [legend]="barChartLegend"
+      [type]="'bar'">
+      </canvas>
+      <button class="w3-button w3-blue mx-2">Add Group</button>
+    </div>
   </div>
+
+
+  
