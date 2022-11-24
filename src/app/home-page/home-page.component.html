@@ -1,27 +1,65 @@
 <div class="container m-2">
-  <button class="w3-button w3-blue mx-2" (click)="companyCountData()">Company vs Count</button>
-  <button class="w3-button w3-blue mx-2" (click)="groupCountData()">Group Vs Count</button>
-    <div class="container m-5 p-5 border chart-section" *ngIf="companyCountValue">
+  <button class="w3-button w3-blue mx-2" (click)="companyCountData()"> <i class="fa fa-bar-chart-o"></i> Company vs Count</button>
+  <button class="w3-button w3-blue mx-2" (click)="groupCountData()"><i class="fa fa-bar-chart"></i> Group Vs Count</button>
+    <div class="container m-3 p-3 border chart-section" *ngIf="companyCountValue">
       <h3>Student placed in Top Companies</h3>
-      <canvas baseChart
-      [data]="studentCompany"
-      [plugins]="barChartPlugins"
-      [legend]="barChartLegend"
-      [type]="'bar'">
-      </canvas>
-      <button class="w3-button w3-blue mx-2">Add Company</button>
+      <button class="w3-button w3-blue my-3" (click)="chartBarPieView()">{{chartView ? "Pie Chart View": "Bar Chart View"}}</button>
+      <div class="my-5">
+        <canvas baseChart
+        [data]="studentCompany"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="chartType">
+        </canvas>
+      </div>
+      <button class="w3-button w3-blue mx-2" *ngIf="adminUser" (click)="addCompany()"><i class="fa fa-plus-circle"></i> Add Company</button>
     </div>
-    <div class="container m-5 p-5 border chart-section" *ngIf="groupCountValue">
+    <div class="container m-3 p-3 border chart-section" *ngIf="groupCountValue">
       <h3>Group-wise Students Count placed</h3>
+      <button class="w3-button w3-blue my-3" (click)="chartBarPieView()">{{chartView ? "Pie Chart View": "Bar Chart View"}}</button>
       <canvas baseChart
       [data]="groupStudent"
       [plugins]="barChartPlugins"
       [legend]="barChartLegend"
-      [type]="'bar'">
+      [type]="chartType">
       </canvas>
-      <button class="w3-button w3-blue mx-2">Add Group</button>
+      <button class="w3-button w3-blue mx-2" *ngIf="adminUser" (click)="addGroup()"><i class="fa fa-plus-circle"></i>  Add Group</button>
     </div>
   </div>
 
 
+
+<div id="addChart" class="w3-modal"  *ngIf="showModal" style="display:block;">
+    <div class="w3-modal-content" style="width: 650px;">
+      <header class="w3-container w3-blue p-3"> 
+        <span (click)="hideUpdateform()" onclick="document.getElementById('addChart').style.display='none'" 
+        class="w3-button w3-display-topright">&times;</span>
+        <h2><i class="fa fa-bank"></i> {{addCompanyflag ? "Add New Company" : "Add New Group" }}</h2>
+      </header>
+      <div class="w3-container">
+        <form (ngSubmit)="onSubmit(chartData)">
+          <div class="form-group" *ngIf="addCompanyflag">
+            <label><i class="fa fa-bank"></i> Company Name</label>
+            <input class="form-control" type="text" name="name" [(ngModel)]="chartData.companyName" required>
+          </div>
+  
+          <div class="form-group" *ngIf="!addCompanyflag">
+            <label><i class="fa fa-bank"></i> Group Name </label>
+            <input class="form-control" type="text" name="location" [(ngModel)]="chartData.groupName" required>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fa fa-dashboard"></i> Placed Count</label>
+            <input class="form-control" type="text" name="location" [(ngModel)]="chartData.placedCount" required>
+          </div>
+  
+          <footer class="w3-container">
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-plus-circle"></i>  {{addCompanyflag ? "Add Company" : "Add Group" }}</button>
+            </div>
+          </footer>
+        </form>
+      </div>
+    </div>
+  </div>
   

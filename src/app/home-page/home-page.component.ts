@@ -1,7 +1,8 @@
 import { Component,OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration ,Chart, registerables } from 'chart.js';
+import { ChartConfiguration ,Chart, registerables, ChartType } from 'chart.js';
 import { HttpCallService } from '../http-call.service';
 import { BaseChartDirective } from 'ng2-charts';
+import { Data } from 'ws';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -14,6 +15,14 @@ export class HomePageComponent implements OnInit{
   public companyCountValue =true;
   public groupCountValue =false;
   public showModal=false;
+  public addCompanyflag=false;
+  public chartData:any={
+    companyName:'',
+    groupName:'',
+    placedCount:''
+  }
+  public chartView:boolean=true;
+  public adminUser:boolean=false;
   public studentCompanyData:any={
     labels:[],
     count:[]
@@ -21,7 +30,8 @@ export class HomePageComponent implements OnInit{
   public studentLabel:any=[];
   public studentCount:any=[];
   public groupLabel:any=[];
-  public groupCount:any=[]
+  public groupCount:any=[];
+  public chartType: ChartType  = 'bar';
   public studentCompany: ChartConfiguration<'bar'>['data'] = {
     labels: [],
     datasets: [
@@ -64,6 +74,9 @@ export class HomePageComponent implements OnInit{
   ngOnInit(): void {
     this.getStudentCompanyData();
     this.getGroupStudent()
+    if(localStorage.getItem("adminUser")=="admin"){
+      this.adminUser = true;
+    }
   }
   companyCountData(){
     this.groupCountValue=false;
@@ -81,6 +94,15 @@ export class HomePageComponent implements OnInit{
     this.groupCount=[];
     this.getGroupStudent();
     this.chart?.update();
+  }
+
+  chartBarPieView(){
+    this.chartView = !this.chartView
+    if(!this.chartView){
+      this.chartType='pie'
+    } else{
+      this.chartType='bar'
+    }
   }
 
   getStudentCompanyData(){
@@ -108,7 +130,55 @@ export class HomePageComponent implements OnInit{
       this.groupStudent.datasets[0].data=this.groupCount;
       this.chart?.update();
     })
-    
   }
 
+  public addGroup(){
+    this.addCompanyflag=false;
+    this.showModal=true;
+  }
+
+  public addCompany(){
+    this.addCompanyflag=true;
+    this.showModal=true;
+  }
+
+  public hideUpdateform():void{
+    this.showModal=false;
+  }
+
+  onSubmit(data:any){
+    var finalPayload:any;
+    if(data.companyName.length>=1){
+      finalPayload={
+        "companyName": data.companyName,
+        "placedCount": data.placedCount
+      }
+      this.httpCallService.createstudentCompany(finalPayload).subscribe((res)=>{
+        console.log(res);
+        this.hideUpdateform();
+        this.companyCountData();
+        this.chartData={
+          companyName:'',
+          groupName:'',
+          placedCount:''
+        }
+      })
+    } else{
+      finalPayload = {
+        "groupName": data.groupName,
+        "placedCount": data.placedCount
+      }
+      this.httpCallService.creategroupStudent(finalPayload).subscribe((res)=>{
+        console.log(res);
+        this.hideUpdateform();
+        this.groupCountData();
+        this.chartData={
+          companyName:'',
+          groupName:'',
+          placedCount:''
+        }
+      })
+    }
+
+  }
 }

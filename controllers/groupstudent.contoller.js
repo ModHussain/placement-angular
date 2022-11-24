@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new GroupStudent
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.companyName) {
+  if (!req.body.groupName) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -15,7 +15,7 @@ exports.create = (req, res) => {
   // Create a GroupStudent
   const data = {
     groupName: req.body.groupName,
-    placedCount: req.body.message
+    placedCount: req.body.placedCount
   };
 
   // Save GroupStudent in the database

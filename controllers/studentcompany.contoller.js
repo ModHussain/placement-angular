@@ -15,7 +15,7 @@ exports.create = (req, res) => {
   // Create a StudentCompany
   const data = {
     companyName: req.body.companyName,
-    placedCount: req.body.message
+    placedCount: req.body.placedCount
   };
 
   // Save StudentCompany in the database
